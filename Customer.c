@@ -1,6 +1,6 @@
 /*****************************************************************//**
  * \file   Customer.c
- * \brief  
+ * \brief  Funções para a lista de Clientes
  * 
  * \author Eduardo
  * \date   March 2023
@@ -217,6 +217,7 @@ void ShowCustomerList(Customer* h) {
 		aux = aux->next;
 	}
 }
+
 /**
  * Limpar/Libertar o espaço da memória ocupada por uma lista de Clientes
  * 

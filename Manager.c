@@ -65,6 +65,7 @@ Manager* LoadManagersBin(char fileName[]) {
 	fclose(fp);
 	return h;
 }
+
 /**
  * Gravar uma lista de Gestores para um ficheiro de texto
  * 
@@ -86,6 +87,7 @@ bool SaveManagers(Manager* h, char fileName[]) {
 	fclose(fp);
 	return true;
 }
+
 /**
  * Gravar uma lista de Gestores para um ficheiro binário
  * 
