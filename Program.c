@@ -1,6 +1,6 @@
 /*****************************************************************//**
  * \file   Program.c
- * \brief  
+ * \brief  Função main para correr o codigo
  * 
  * \author Eduardo
  * \date   March 2023

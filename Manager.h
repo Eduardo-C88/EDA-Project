@@ -1,6 +1,6 @@
 /*****************************************************************//**
  * \file   Manager.h
- * \brief  
+ * \brief  Declaração da struct e funções para os Gestores
  * 
  * \author Eduardo
  * \date   March 2023
@@ -26,39 +26,47 @@ typedef struct Manager{
 }Manager;
 
 /**
- * .
+ * Carregar uma lista de Gestores de um ficheiro de texto
  */
 Manager* LoadManagers(char f[]);
+
 /**
- * .
+ * Carregar uma lista de Gestores de um ficheiro binário
  */
 Manager* LoadManagersBin(char fileName[]);
+
 /**
- * .
+ * Gravar uma lista de Gestores para um ficheiro de texto
  */
 bool SaveManagers(Manager* h, char f[]);
+
 /**
- * .
+ * Gravar uma lista de Gestores para um ficheiro binário
  */
 bool SaveManagersBin(Manager* h, char f[]);
+
 /**
- * .
+ * Inserir um Gestor a uma lista de Gestores, ordenada por id
  */
 Manager* AddManager(Manager* h, Manager* m);
+
 /**
- * .
+ * Remover um Gestor com um id definido de uma lista de Gestores
  */
 Manager* RemoveManager(Manager* h, int id);
+
 /**
- * .
+ * Trocar um Gestor de uma lista de Gestores por um com o mesmo id
  */
 bool EditManager(Manager* h, Manager* m);
+
 /**
- * .
+ * Mostrar todos os Gestores em uma lista de Gestores
  */
 void ShowManagerList(Manager* h);
+
 /**
- * .
+ * Limpar/Libertar o espaço da memória ocupada por uma lista de Gestores
  */
 bool ClearManagerList(Manager* h);
 

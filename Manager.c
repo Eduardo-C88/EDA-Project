@@ -1,6 +1,6 @@
 /*****************************************************************//**
  * \file   Manager.c
- * \brief  
+ * \brief  Funções para a lista de Gestores
  * 
  * \author Eduardo
  * \date   March 2023
@@ -9,7 +9,7 @@
 #include "Manager.h"
 
  /**
-  * .
+  * Carregar uma lista de Gestores de um ficheiro de texto
   *
   * \param fileName
   * \return
@@ -46,7 +46,7 @@ Manager* LoadManagers(char fileName[]) {
 }
 
 /**
- * .
+ * Carregar uma lista de Gestores de um ficheiro binário
  *
  * \param fileName
  * \return
@@ -66,7 +66,7 @@ Manager* LoadManagersBin(char fileName[]) {
 	return h;
 }
 /**
- * .
+ * Gravar uma lista de Gestores para um ficheiro de texto
  * 
  * \param h
  * \return 
@@ -87,7 +87,7 @@ bool SaveManagers(Manager* h, char fileName[]) {
 	return true;
 }
 /**
- * .
+ * Gravar uma lista de Gestores para um ficheiro binário
  * 
  * \param h
  * \return 
@@ -108,7 +108,7 @@ bool SaveManagersBin(Manager* h, char fileName[]) {
 }
 
 /**
- * .
+ * Inserir um Gestor a uma lista de Gestores, ordenada por id
  * 
  * \param h
  * \param m
@@ -143,7 +143,7 @@ Manager* AddManager(Manager* h, Manager* m) {
 }
 
 /**
- * .
+ * Remover um Gestor com um id definido de uma lista de Gestores
  * 
  * \param h
  * \param id
@@ -178,7 +178,7 @@ Manager* RemoveManager(Manager* h, int id) {
 }
 
 /**
- * .
+ * Trocar um Gestor de uma lista de Gestores por um com o mesmo id
  * 
  * \param h
  * \param m
@@ -201,7 +201,7 @@ bool EditManager(Manager* h, Manager* m){
 }
 
 /**
- * .
+ * Mostrar todos os Gestores em uma lista de Gestores
  * 
  * \param h
  */
@@ -214,7 +214,7 @@ void ShowManagerList(Manager* h){
 }
 
 /**
- * .
+ * Limpar/Libertar o espaço da memória ocupada por uma lista de Gestores
  *
  * \param h
  * \return

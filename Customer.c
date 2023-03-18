@@ -9,7 +9,7 @@
 #include "Customer.h"
 
 /**
- * .
+ * Carregar uma lista de Clientes de um ficheiro de texto
  * 
  * \param fileName
  * \return 
@@ -46,7 +46,7 @@ Customer* LoadCustomers(char fileName[]) {
 }
 
 /**
- * .
+ * Carregar uma lista de Clientes de um ficheiro binário
  * 
  * \param fileName
  * \return 
@@ -67,7 +67,7 @@ Customer* LoadCustomersBin(char fileName[]) {
 }
 
 /**
- * .
+ * Gravar uma lista de Clientes para um ficheiro de texto
  * 
  * \param h
  * \param fileName
@@ -90,7 +90,7 @@ bool SaveCustomers(Customer* h, char fileName[]) {
 }
 
 /**
- * .
+ * Gravar uma lista de Clientes para um ficheiro binário
  * 
  * \param h
  * \param fileName
@@ -112,7 +112,7 @@ bool SaveCustomersBin(Customer* h, char fileName[]) {
 }
 
 /**
- * .
+ * Inserir um Cliente a uma lista de Clientes, ordenada por id
  * 
  * \param h
  * \param c
@@ -147,7 +147,7 @@ Customer* AddCustomer(Customer* h, Customer* c) {
 }
 
 /**
- * .
+ * Remover um Cliente com um id definido de uma lista de Clientes 
  * 
  * \param h
  * \param id
@@ -182,7 +182,7 @@ Customer* RemoveCustomer(Customer* h, int id) {
 }
 
 /**
- * .
+ * Trocar um Cliente de uma lista de Clientes por um com o mesmo id
  * 
  * \param h
  * \param c
@@ -206,7 +206,7 @@ bool EditCustomer(Customer* h, Customer* c) {
 }
 
 /**
- * .
+ * Mostrar todos os Clientes em uma lista de Clientes
  * 
  * \param h
  */
@@ -218,7 +218,7 @@ void ShowCustomerList(Customer* h) {
 	}
 }
 /**
- * .
+ * Limpar/Libertar o espaço da memória ocupada por uma lista de Clientes
  * 
  * \param h
  * \return 

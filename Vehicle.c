@@ -9,7 +9,7 @@
 #include "Vehicle.h"
 
  /**
-  * .
+  * Carregar uma lista de Transportes de um ficheiro de texto
   *
   * \param fileName
   * \return
@@ -46,7 +46,7 @@ Vehicle* LoadVehicles(char fileName[]) {
 }
 
 /**
- * .
+ * Carregar uma lista de Transportes de um ficheiro binário
  *
  * \param fileName
  * \return
@@ -67,7 +67,7 @@ Vehicle* LoadVehiclesBin(char fileName[]) {
 }
 
 /**
- * .
+ * Gravar uma lista de Transportes para um ficheiro de texto
  * 
  * \param h
  * \return 
@@ -89,7 +89,7 @@ bool SaveVehicle(Vehicle* h, char fileName[]) {
 }
 
 /**
- * .
+ * Gravar uma lista de Transportes para um ficheiro binário
  * 
  * \param h
  * \return 
@@ -110,7 +110,7 @@ bool SaveVehicleBin(Vehicle* h, char fileName[]) {
 }
 
 /**
- * .
+ * Inserir um Transporte a uma lista de Transportes, ordenada por id
  * 
  * \param h
  * \param v
@@ -144,7 +144,7 @@ Vehicle* AddVehicle(Vehicle* h, Vehicle* v){
 }
 
 /**
- * .
+ * Remover um Transporte com um id definido de uma lista de Transportes
  * 
  * \param h
  * \param id
@@ -179,7 +179,7 @@ Vehicle* RemoveVehicle(Vehicle* h, int id) {
 }
 
 /**
- * .
+ * Trocar um Transporte de uma lista de Transportes por um com o mesmo id
  * 
  * \param h
  * \param v
@@ -203,7 +203,7 @@ bool EditVehicle(Vehicle* h, Vehicle* v){
 }
 
 /**
- * .
+ * Mostrar todos os Transportes em uma lista de Transportes
  * 
  * \param h
  */
@@ -216,7 +216,7 @@ void ShowVehicleList(Vehicle* h) {
 }
 
 /**
- * .
+ * Limpar/Libertar o espaço da memória ocupada por uma lista de Transportes
  *
  * \param h
  * \return
@@ -232,6 +232,13 @@ bool ClearVehicleList(Vehicle* h) {
 	return true;
 }
 
+/**
+ * Devolver um Transporte, de tipo definido, de um lista de Transportes 
+ * 
+ * \param h
+ * \param type
+ * \return 
+ */
 Vehicle* SearchVehicle(Vehicle* h, char type[]) {
 	if (h == NULL) return h;
 	Vehicle* aux = h;
