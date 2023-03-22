@@ -15,34 +15,34 @@
  * \return 
  */
 Customer* LoadCustomers(char fileName[]) {
-	Customer* h = NULL;
-	Customer* current = NULL;
+	//Customer* h = NULL;
+	//Customer* current = NULL;
 
-	FILE* fp = fopen(fileName, "r");
-	if (fp == NULL)return NULL;
+	//FILE* fp = fopen(fileName, "r");
+	//if (fp == NULL)return NULL;
 
-	while (!feof(fp)) {
-		Customer* newCustomer = (Customer*)malloc(sizeof(Customer));
-		if (newCustomer == NULL)return NULL;
+	//while (!feof(fp)) {
+	//	Customer* newCustomer = (Customer*)malloc(sizeof(Customer));
+	//	if (newCustomer == NULL)return NULL;
 
-		if (fscanf(fp, "%d;%[^;];%[^;];%[^;];%0.2f\n", newCustomer->id, newCustomer->name, newCustomer->nif, newCustomer->address, newCustomer->balance) == 5) {
-			newCustomer->next = NULL;
+	//	if (fscanf(fp, "%d;%[^;];%[^;];%[^;];%0.2f\n", newCustomer->id, newCustomer->name, newCustomer->nif, newCustomer->address, newCustomer->balance) == 5) {
+	//		newCustomer->next = NULL;
 
-			if (h == NULL) {
-				h = newCustomer;
-				current = newCustomer;
-			}
-			else {
-				current->next = newCustomer;
-				current = newCustomer;
-			}
-		}
-		else {
-			free(newCustomer);
-		}
-	}
-	fclose(fp);
-	return h;
+	//		if (h == NULL) {
+	//			h = newCustomer;
+	//			current = newCustomer;
+	//		}
+	//		else {
+	//			current->next = newCustomer;
+	//			current = newCustomer;
+	//		}
+	//	}
+	//	else {
+	//		free(newCustomer);
+	//	}
+	//}
+	//fclose(fp);
+	//return h;
 }
 
 /**

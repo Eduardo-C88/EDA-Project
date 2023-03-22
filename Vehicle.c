@@ -15,34 +15,34 @@
   * \return
   */
 Vehicle* LoadVehicles(char fileName[]) {
-	Vehicle* h = NULL;
-	Vehicle* current = NULL;
+	//Vehicle* h = NULL;
+	//Vehicle* current = NULL;
 
-	FILE* fp = fopen(fileName, "r");
-	if (fp == NULL)return NULL;
+	//FILE* fp = fopen(fileName, "r");
+	//if (fp == NULL)return NULL;
 
-	while (!feof(fp)) {
-		Vehicle* newVehicle = (Vehicle*)malloc(sizeof(Vehicle));
-		if (newVehicle == NULL)return NULL;
+	//while (!feof(fp)) {
+	//	Vehicle* newVehicle = (Vehicle*)malloc(sizeof(Vehicle));
+	//	if (newVehicle == NULL)return NULL;
 
-		if (fscanf(fp, "%d;%[^;];%0.2f;%0.2f;%[^;]\n", newVehicle->id, newVehicle->type, newVehicle->battery, newVehicle->price, newVehicle->geoCode) == 5) {
-			newVehicle->next = NULL;
+	//	if (fscanf(fp, "%d;%[^;];%0.2f;%0.2f;%[^;]\n", newVehicle->id, newVehicle->type, newVehicle->battery, newVehicle->price, newVehicle->geoCode) == 5) {
+	//		newVehicle->next = NULL;
 
-			if (h == NULL) {
-				h = newVehicle;
-				current = newVehicle;
-			}
-			else {
-				current->next = newVehicle;
-				current = newVehicle;
-			}
-		}
-		else {
-			free(newVehicle);
-		}
-	}
-	fclose(fp);
-	return h;
+	//		if (h == NULL) {
+	//			h = newVehicle;
+	//			current = newVehicle;
+	//		}
+	//		else {
+	//			current->next = newVehicle;
+	//			current = newVehicle;
+	//		}
+	//	}
+	//	else {
+	//		free(newVehicle);
+	//	}
+	//}
+	//fclose(fp);
+	//return h;
 }
 
 /**

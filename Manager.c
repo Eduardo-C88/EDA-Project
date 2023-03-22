@@ -15,34 +15,34 @@
   * \return
   */
 Manager* LoadManagers(char fileName[]) {
-	Manager* h = NULL;
-	Manager* current = NULL;
+	//Manager* h = NULL;
+	//Manager* current = NULL;
 
-	FILE* fp = fopen(fileName, "r");
-	if (fp == NULL)return NULL;
+	//FILE* fp = fopen(fileName, "r");
+	//if (fp == NULL)return NULL;
 
-	while (!feof(fp)) {
-		Manager* newManager = (Manager*)malloc(sizeof(Manager));
-		if (newManager == NULL)return NULL;
+	//while (!feof(fp)) {
+	//	Manager* newManager = (Manager*)malloc(sizeof(Manager));
+	//	if (newManager == NULL)return NULL;
 
-		if (fscanf(fp, "%d;%[^;];%[^;];%[^;]", newManager->id, newManager->name, newManager->email, newManager->password)== 4) {
-			newManager->next = NULL;
+	//	if (fscanf(fp, "%d;%[^;];%[^;];%[^;]", newManager->id, newManager->name, newManager->email, newManager->password)== 4) {
+	//		newManager->next = NULL;
 
-			if (h == NULL) {
-				h = newManager;
-				current = newManager;
-			}
-			else {
-				current->next = newManager;
-				current = newManager;
-			}
-		}
-		else {
-			free(newManager);
-		}
-	}
-	fclose(fp);
-	return h;
+	//		if (h == NULL) {
+	//			h = newManager;
+	//			current = newManager;
+	//		}
+	//		else {
+	//			current->next = newManager;
+	//			current = newManager;
+	//		}
+	//	}
+	//	else {
+	//		free(newManager);
+	//	}
+	//}
+	//fclose(fp);
+	//return h;
 }
 
 /**
