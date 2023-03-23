@@ -28,7 +28,7 @@ typedef struct Vehicle{
 /**
  * Carregar uma lista de Transportes de um ficheiro de texto
  */
-Customer* LoadVehiclesII(char fileName[]);
+Vehicle* LoadVehiclesII(char fileName[]);
 /**
  * Carregar uma lista de Transportes de um ficheiro de texto
  */

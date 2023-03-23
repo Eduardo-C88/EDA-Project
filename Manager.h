@@ -28,7 +28,7 @@ typedef struct Manager{
 /**
  * Carregar uma lista de Gestores de um ficheiro de texto
  */
-Customer* LoadManagersII(char fileName[]);
+Manager* LoadManagersII(char fileName[]);
 /**
  * Carregar uma lista de Gestores de um ficheiro de texto
  */
