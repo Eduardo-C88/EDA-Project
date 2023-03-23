@@ -14,6 +14,27 @@
   * \param fileName
   * \return
   */
+Vehicle* LoadVehiclesII(char fileName[]) {
+	Vehicle* h = NULL;
+	Vehicle* aux = NULL;
+
+	FILE* fp = fopen(fileName, "r");
+	if (fp == NULL)return NULL;
+
+	while (!feof) {
+		fscanf(fp, "%d;%s;%0.2f;%0.2f;%s\n", aux->id, aux->type, aux->battery, aux->price, aux->geoCode);
+		h = AddVehicle(h, &aux);
+	}
+	fclose(fp);
+	return h;
+}
+
+ /**
+  * Carregar uma lista de Transportes de um ficheiro de texto
+  *
+  * \param fileName
+  * \return
+  */
 Vehicle* LoadVehicles(char fileName[]) {
 	//Vehicle* h = NULL;
 	//Vehicle* current = NULL;
@@ -119,6 +140,7 @@ bool SaveVehicleBin(Vehicle* h, char fileName[]) {
 Vehicle* AddVehicle(Vehicle* h, Vehicle* v){
 	Vehicle* aux = (Vehicle*)malloc(sizeof(Vehicle));
 	aux->next = NULL;
+	aux = v;
 
 	if (h == NULL) {
 		h = v;

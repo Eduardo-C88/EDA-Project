@@ -8,6 +8,27 @@
 
 #include "Customer.h"
 
+ /**
+  * Carregar uma lista de Clientes de um ficheiro de texto
+  *
+  * \param fileName
+  * \return
+  */
+Customer* LoadCustomersII(char fileName[]) {
+	Customer* h = NULL;
+	Customer* aux = NULL;
+
+	FILE* fp = fopen(fileName, "r");
+	if (fp == NULL)return NULL;
+
+	while (!feof) {
+		fscanf(fp, "%d;%s;%s;%s;%0.2f\n", aux->id, aux->name, aux->nif, aux->address, aux->balance);
+		h = AddCustomer(h, &aux);
+	}
+	fclose(fp);
+	return h;
+}
+
 /**
  * Carregar uma lista de Clientes de um ficheiro de texto
  * 
@@ -121,6 +142,7 @@ bool SaveCustomersBin(Customer* h, char fileName[]) {
 Customer* AddCustomer(Customer* h, Customer* c) {
 	Customer* aux = (Customer*)malloc(sizeof(Customer));
 	aux->next = NULL;
+	aux = c;
 
 	if (h == NULL) {
 		h = c;

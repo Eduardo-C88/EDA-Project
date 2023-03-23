@@ -14,6 +14,27 @@
   * \param fileName
   * \return
   */
+Manager* LoadManagersII(char fileName[]) {
+	Manager* h = NULL;
+	Manager* aux = NULL;
+
+	FILE* fp = fopen(fileName, "r");
+	if (fp == NULL)return NULL;
+
+	while (!feof) {
+		fscanf(fp, "%d;%s;%s;%s\n", aux->id, aux->name, aux->email, aux->password);
+		h = AddManager(h, &aux);
+	}
+	fclose(fp);
+	return h;
+}
+
+ /**
+  * Carregar uma lista de Gestores de um ficheiro de texto
+  *
+  * \param fileName
+  * \return
+  */
 Manager* LoadManagers(char fileName[]) {
 	//Manager* h = NULL;
 	//Manager* current = NULL;
@@ -119,6 +140,7 @@ bool SaveManagersBin(Manager* h, char fileName[]) {
 Manager* AddManager(Manager* h, Manager* m) {
 	Manager* aux = (Manager*)malloc(sizeof(Manager));
 	aux->next = NULL;
+	aux = m;
 
 	if (h == NULL) {
 		h = m;

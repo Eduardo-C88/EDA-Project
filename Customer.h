@@ -29,6 +29,10 @@ typedef struct Customer {
 /**
  * Carregar uma lista de Clientes de um ficheiro de texto
  */
+Customer* LoadCustomersII(char fileName[]);
+/**
+ * Carregar uma lista de Clientes de um ficheiro de texto
+ */
 Customer* LoadCustomers(char f[]);
 
 /**
