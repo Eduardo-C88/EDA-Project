@@ -28,21 +28,17 @@ typedef struct Manager{
 /**
  * Carregar uma lista de Gestores de um ficheiro de texto
  */
-Manager* LoadManagersII(char fileName[]);
-/**
- * Carregar uma lista de Gestores de um ficheiro de texto
- */
 Manager* LoadManagers(char f[]);
 
 /**
  * Carregar uma lista de Gestores de um ficheiro binário
  */
-Manager* LoadManagersBin(char fileName[]);
+//Manager* LoadManagersBin(char fileName[]);
 
 /**
  * Gravar uma lista de Gestores para um ficheiro de texto
  */
-bool SaveManagers(Manager* h, char f[]);
+//bool SaveManagers(Manager* h, char f[]);
 
 /**
  * Gravar uma lista de Gestores para um ficheiro binário

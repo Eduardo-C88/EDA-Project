@@ -14,56 +14,19 @@
   * \param fileName
   * \return
   */
-Vehicle* LoadVehiclesII(char fileName[]) {
+Vehicle* LoadVehicles(char fileName[]) {
 	Vehicle* h = NULL;
-	Vehicle* aux = NULL;
+	Vehicle aux;
 
 	FILE* fp = fopen(fileName, "r");
 	if (fp == NULL)return NULL;
 
 	while (!feof) {
-		fscanf(fp, "%d;%s;%0.2f;%0.2f;%s\n", aux->id, aux->type, aux->battery, aux->price, aux->geoCode);
+		fscanf(fp, "%d;%s;%0.2f;%0.2f;%s\n", &aux.id, aux.type, aux.battery, aux->price, aux->geoCode);//REVER
 		h = AddVehicle(h, &aux);
 	}
 	fclose(fp);
 	return h;
-}
-
- /**
-  * Carregar uma lista de Transportes de um ficheiro de texto
-  *
-  * \param fileName
-  * \return
-  */
-Vehicle* LoadVehicles(char fileName[]) {
-	//Vehicle* h = NULL;
-	//Vehicle* current = NULL;
-
-	//FILE* fp = fopen(fileName, "r");
-	//if (fp == NULL)return NULL;
-
-	//while (!feof(fp)) {
-	//	Vehicle* newVehicle = (Vehicle*)malloc(sizeof(Vehicle));
-	//	if (newVehicle == NULL)return NULL;
-
-	//	if (fscanf(fp, "%d;%[^;];%0.2f;%0.2f;%[^;]\n", newVehicle->id, newVehicle->type, newVehicle->battery, newVehicle->price, newVehicle->geoCode) == 5) {
-	//		newVehicle->next = NULL;
-
-	//		if (h == NULL) {
-	//			h = newVehicle;
-	//			current = newVehicle;
-	//		}
-	//		else {
-	//			current->next = newVehicle;
-	//			current = newVehicle;
-	//		}
-	//	}
-	//	else {
-	//		free(newVehicle);
-	//	}
-	//}
-	//fclose(fp);
-	//return h;
 }
 
 /**
@@ -72,20 +35,20 @@ Vehicle* LoadVehicles(char fileName[]) {
  * \param fileName
  * \return
  */
-Vehicle* LoadVehiclesBin(char fileName[]) {
-	Vehicle* h = NULL;
-
-	FILE* fp;
-	fp = fopen(fileName, "rb");
-	if (fp == NULL)return NULL;
-
-	Vehicle* aux;
-	while (fread(&aux, 1, sizeof(Vehicle), fp)) {
-		h = AddVehicle(h, &aux);
-	}
-	fclose(fp);
-	return h;
-}
+//Vehicle* LoadVehiclesBin(char fileName[]) {
+//	Vehicle* h = NULL;
+//
+//	FILE* fp;
+//	fp = fopen(fileName, "rb");
+//	if (fp == NULL)return NULL;
+//
+//	Vehicle aux;
+//	while (fread(&aux, 1, sizeof(Vehicle), fp)) {
+//		h = AddVehicle(h, &aux);
+//	}
+//	fclose(fp);
+//	return h;
+//}
 
 /**
  * Gravar uma lista de Transportes para um ficheiro de texto
@@ -93,21 +56,21 @@ Vehicle* LoadVehiclesBin(char fileName[]) {
  * \param h
  * \return 
  */
-bool SaveVehicle(Vehicle* h, char fileName[]) {
-	FILE* fp;
-	fp = fopen(fileName, "w");
-	if (h == NULL) return false;
-	if (fp == NULL)return false;
-
-	Vehicle* current = h;
-
-	while (current != NULL) {
-		fprintf(fp, "%d;%s;%0.2f;%0.2f;%s\n", current->id, current->type, current->battery, current->price, current->geoCode);
-		current = current->next;
-	}
-	fclose(fp);
-	return true;
-}
+//bool SaveVehicle(Vehicle* h, char fileName[]) {
+//	FILE* fp;
+//	fp = fopen(fileName, "w");
+//	if (h == NULL) return false;
+//	if (fp == NULL)return false;
+//
+//	Vehicle* current = h;
+//
+//	while (current != NULL) {
+//		fprintf(fp, "%d;%s;%0.2f;%0.2f;%s\n", current->id, current->type, current->battery, current->price, current->geoCode);
+//		current = current->next;
+//	}
+//	fclose(fp);
+//	return true;
+//}
 
 /**
  * Gravar uma lista de Transportes para um ficheiro binário
@@ -123,6 +86,7 @@ bool SaveVehicleBin(Vehicle* h, char fileName[]) {
 	fp = fopen(fileName, "wb");
 	if (fp == NULL)return false;
 	while (aux != NULL) {
+		aux->next = NULL;
 		fwrite(aux, 1, sizeof(Vehicle), fp);
 		aux = aux->next;
 	}
@@ -175,8 +139,8 @@ Vehicle* AddVehicle(Vehicle* h, Vehicle* v){
 Vehicle* RemoveVehicle(Vehicle* h, int id) {
 	if (h == NULL) return NULL;
 
-	Manager* aux = h;
-	Manager* prev = NULL;
+	Vehicle* aux = h;
+	Vehicle* prev = NULL;
 
 	while (aux != NULL && aux->id != id) {
 		prev = aux;

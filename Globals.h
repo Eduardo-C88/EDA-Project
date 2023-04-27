@@ -15,3 +15,9 @@
 #include "Manager.h"
 #include "Vehicle.h"
 
+//struct aluger() {
+//
+//}
+//
+//AluguerVeiculo(aluguer, listadeAlugueres);
+//float Custoveiculo(veiculo, dataI, dataF, pI, pF);

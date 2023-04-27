@@ -28,21 +28,17 @@ typedef struct Vehicle{
 /**
  * Carregar uma lista de Transportes de um ficheiro de texto
  */
-Vehicle* LoadVehiclesII(char fileName[]);
-/**
- * Carregar uma lista de Transportes de um ficheiro de texto
- */
 Vehicle* LoadVehicles(char f[]);
 
 /**
  * Carregar uma lista de Transportes de um ficheiro binário
  */
-Vehicle* LoadVehiclesBin(char f[]);
+//Vehicle* LoadVehiclesBin(char f[]);
 
 /**
  * Gravar uma lista de Transportes para um ficheiro de texto
  */
-bool SaveVehicle(Vehicle* h, char f[]);
+//bool SaveVehicle(Vehicle* h, char f[]);
 
 /**
  * Gravar uma lista de Transportes para um ficheiro binário

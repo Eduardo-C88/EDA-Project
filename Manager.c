@@ -14,7 +14,7 @@
   * \param fileName
   * \return
   */
-Manager* LoadManagersII(char fileName[]) {
+Manager* LoadManagers(char fileName[]) {
 	Manager* h = NULL;
 	Manager* aux = NULL;
 
@@ -23,47 +23,10 @@ Manager* LoadManagersII(char fileName[]) {
 
 	while (!feof) {
 		fscanf(fp, "%d;%s;%s;%s\n", aux->id, aux->name, aux->email, aux->password);
-		h = AddManager(h, &aux);
+		h = AddManager(h, aux);
 	}
 	fclose(fp);
 	return h;
-}
-
- /**
-  * Carregar uma lista de Gestores de um ficheiro de texto
-  *
-  * \param fileName
-  * \return
-  */
-Manager* LoadManagers(char fileName[]) {
-	//Manager* h = NULL;
-	//Manager* current = NULL;
-
-	//FILE* fp = fopen(fileName, "r");
-	//if (fp == NULL)return NULL;
-
-	//while (!feof(fp)) {
-	//	Manager* newManager = (Manager*)malloc(sizeof(Manager));
-	//	if (newManager == NULL)return NULL;
-
-	//	if (fscanf(fp, "%d;%[^;];%[^;];%[^;]", newManager->id, newManager->name, newManager->email, newManager->password)== 4) {
-	//		newManager->next = NULL;
-
-	//		if (h == NULL) {
-	//			h = newManager;
-	//			current = newManager;
-	//		}
-	//		else {
-	//			current->next = newManager;
-	//			current = newManager;
-	//		}
-	//	}
-	//	else {
-	//		free(newManager);
-	//	}
-	//}
-	//fclose(fp);
-	//return h;
 }
 
 /**
@@ -72,20 +35,20 @@ Manager* LoadManagers(char fileName[]) {
  * \param fileName
  * \return
  */
-Manager* LoadManagersBin(char fileName[]) {
-	Manager* h = NULL;
-
-	FILE* fp;
-	fp = fopen(fileName, "rb");
-	if (fp == NULL)return NULL;
-
-	Manager* aux;
-	while (fread(&aux, 1, sizeof(Manager), fp)) {
-		h = AddManager(h, &aux);
-	}
-	fclose(fp);
-	return h;
-}
+//Manager* LoadManagersBin(char fileName[]) {
+//	Manager* h = NULL;
+//
+//	FILE* fp;
+//	fp = fopen(fileName, "rb");
+//	if (fp == NULL)return NULL;
+//
+//	Manager* aux;
+//	while (fread(&aux, 1, sizeof(Manager), fp)) {
+//		h = AddManager(h, aux);
+//	}
+//	fclose(fp);
+//	return h;
+//}
 
 /**
  * Gravar uma lista de Gestores para um ficheiro de texto
@@ -93,21 +56,21 @@ Manager* LoadManagersBin(char fileName[]) {
  * \param h
  * \return 
  */
-bool SaveManagers(Manager* h, char fileName[]) {
-	FILE* fp;
-	fp = fopen(fileName, "w");
-	if (h == NULL) return false;
-	if (fp == NULL)return false;
-
-	Manager* current = h;
-
-	while (current != NULL) {
-		fprintf(fp, "%d;%s;%s;%s\n", current->id, current->name, current->email, current->password);
-		current = current->next;
-	}
-	fclose(fp);
-	return true;
-}
+//bool SaveManagers(Manager* h, char fileName[]) {
+//	FILE* fp;
+//	fp = fopen(fileName, "w");
+//	if (h == NULL) return false;
+//	if (fp == NULL)return false;
+//
+//	Manager* current = h;
+//
+//	while (current != NULL) {
+//		fprintf(fp, "%d;%s;%s;%s\n", current->id, current->name, current->email, current->password);
+//		current = current->next;
+//	}
+//	fclose(fp);
+//	return true;
+//}
 
 /**
  * Gravar uma lista de Gestores para um ficheiro binário

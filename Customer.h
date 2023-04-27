@@ -23,57 +23,58 @@ typedef struct Customer {
 	char nif[NIF_SIZE];
 	char address[ADD_SIZE];
 	float balance;
-	struct Customer* next;
+	//struct Customer* next;
 }Customer;
+
+typedef struct CustomerList {
+	Customer customer;
+	struct CustomerList* next;
+}CustomerList;
 
 /**
  * Carregar uma lista de Clientes de um ficheiro de texto
  */
-Customer* LoadCustomersII(char fileName[]);
-/**
- * Carregar uma lista de Clientes de um ficheiro de texto
- */
-Customer* LoadCustomers(char f[]);
+CustomerList* LoadCustomers(char f[]);
 
 /**
  * Carregar uma lista de Clientes de um ficheiro binário
  */
-Customer* LoadCustomersBin(char f[]);
+//CustomerList* LoadCustomersBin(char f[]);
 
 /**
  * Gravar uma lista de Clientes para um ficheiro de texto
  */
-bool SaveCustomers(Customer* h, char f[]);
+//bool SaveCustomers(CustomerList* h, char f[]);
 
 /**
  * Gravar uma lista de Clientes para um ficheiro binário
  */
-bool SaveCustomersBin(Customer* h, char f[]);
+bool SaveCustomersBin(CustomerList* h, char f[]);
 
 /**
  * Inserir um Cliente a uma lista de Clientes, ordenada por id
  */
-Customer* AddCustomer(Customer* h, Customer* c);
+CustomerList* AddCustomer(CustomerList* h, Customer* c);
 
 /**
  * Remover um Cliente com um id definido de uma lista de Clientes 
  */
-Customer* RemoveCustomer(Customer* h, int id);
+CustomerList* RemoveCustomer(CustomerList* h, int id);
 
 /**
  * Trocar um Cliente de uma lista de Clientes por um com o mesmo id
  */
-bool EditCustomer(Customer* h, Customer* c);
+bool EditCustomer(CustomerList* h, Customer* c);
 
 /**
  * Mostrar todos os Clientes em uma lista de Clientes
  */
-void ShowCustomerList(Customer* h);
+void ShowCustomerList(CustomerList* h);
 
 /**
  * Limpar/Libertar o espaço da memória ocupada por uma lista de Clientes
  */
-bool ClearCustomerList(Customer* h);
+bool ClearCustomerList(CustomerList* h);
 
 #endif
 
