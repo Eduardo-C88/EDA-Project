@@ -5,7 +5,6 @@
  * \author Eduardo
  * \date   March 2023
  *********************************************************************/
-#pragma once
 #pragma warning(disable : 4996)
 
 #ifndef VEHICLE
@@ -20,62 +19,66 @@ typedef struct Vehicle{
 	int id;
 	char type[TYPE_SIZE];
 	float battery;
-	float price;
+	float price;               //por distância
 	char geoCode[CODE_SIZE];
-	struct Vehicle* next;
+	//struct Vehicle* next;
 }Vehicle;
 
-/**
- * Carregar uma lista de Transportes de um ficheiro de texto
- */
-Vehicle* LoadVehicles(char f[]);
+typedef struct VehicleList {
+	Vehicle vehicle;
+	struct VehicleList* next
+}VehicleList;
 
 /**
- * Carregar uma lista de Transportes de um ficheiro binário
+ * Carregar uma lista de Veículos de um ficheiro de texto
  */
-//Vehicle* LoadVehiclesBin(char f[]);
+VehicleList* LoadVehicles(char f[]);
 
 /**
- * Gravar uma lista de Transportes para um ficheiro de texto
+ * Gravar uma lista de Veículos para um ficheiro binário
  */
-//bool SaveVehicle(Vehicle* h, char f[]);
+bool SaveVehiclesBin(VehicleList* h, char f[]);
 
 /**
- * Gravar uma lista de Transportes para um ficheiro binário
+ * Inserir um Veículo a uma lista de Veículos, ordenada de ordem crescente por id
  */
-bool SaveVehicleBin(Vehicle* h, char f[]);
+VehicleList* AddVehicle(VehicleList* h, Vehicle* v);
 
 /**
- * Inserir um Transporte a uma lista de Transportes, ordenada por id
+ * Remover um Veículo com um id definido de uma lista de Veículos
  */
-Vehicle* AddVehicle(Vehicle* h, Vehicle* v);
+VehicleList* RemoveVehicle(VehicleList* h, int id);
 
 /**
- * Remover um Transporte com um id definido de uma lista de Transportes
+ * Trocar um Veículo de uma lista de Veículos por um com o mesmo id
  */
-Vehicle* RemoveVehicle(Vehicle* h, int id);
+bool EditVehicle(VehicleList* h, Vehicle* v);
 
 /**
- * Trocar um Transporte de uma lista de Transportes por um com o mesmo id
+ * Mostrar todos os Veículos em uma lista de Veículos
  */
-bool EditVehicle(Vehicle* h, Vehicle* v);
+void ShowVehiclesList(VehicleList* h);
 
 /**
- * Mostrar todos os Transportes em uma lista de Transportes
+ * Limpar/Libertar o espaço da memória ocupada por uma lista de Veículos
  */
-void ShowVehicleList(Vehicle* h);
+bool ClearVehiclesList(VehicleList* h);
 
 /**
- * Limpar/Libertar o espaço da memória ocupada por uma lista de Transportes
+ * Devolver um Veículo, com um geocódigo determinado, de um lista de Veículos
  */
-bool ClearVehicleList(Vehicle* h);
+Vehicle* SearchVehicle(VehicleList* h, char g[]);
 
 /**
- * Devolver um Transporte, de tipo definido, de um lista de Transportes
+ * Inserir um Veículo a uma lista de Veículos, ordenada de ordem decrescente por autonomia
  */
-Vehicle* SearchVehicle(Vehicle* h, char t[]);
+VehicleList* AddVehicleAutDec(VehicleList* h, Vehicle* v);
 
-
+/**
+ * Listar os Veículos, de uma lista de Veículos já existente, com um determinado geocódigo 
+ */
+VehicleList* AddVehicleGeo(VehicleList* h, VehicleList* v, char* geoCode);
 #endif
+
 
 

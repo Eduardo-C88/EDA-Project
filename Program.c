@@ -9,9 +9,9 @@
 #include "Globals.h"
 
 int main() {
-	Customer* cHeader = LoadCustomers("Customers.txt");
-	Manager* mHeader = LoadManagers("Managers.txt");
-	Vehicle* vHeader = LoadVehicles("Vehicles.txt");
+	CustomerList* cHeader = LoadCustomers("Customers.txt");
+	ManagerList* mHeader = LoadManagers("Managers.txt");
+	VehicleList* vHeader = LoadVehicles("Vehicles.txt");
 
 	Customer c1 = { 1, "Carlos", "267543512", "Rua dos Robalos", 100654.57 };
 	Manager m1 = { 1, "Rodrigo", "rodrisantos@gmail.pt", "yessir123" };
@@ -25,5 +25,5 @@ int main() {
 	mHeader = AddManager(mHeader, &m1);
 	vHeader = AddVehicle(vHeader, &v1);
 
-	ShowCustomerList(cHeader);
+	ShowCustomersList(cHeader);
 }

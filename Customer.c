@@ -65,13 +65,13 @@ CustomerList* AddCustomer(CustomerList* h, Customer* c) {
 	aux->customer = *c;
 
 	if (h == NULL) {
-		h = c;
+		h = aux;
 		return h;
 	}
 	else {	
 		if (h->customer.id > aux->customer.id) {
 			aux->next = h;
-			h = c;
+			h = aux;
 		}
 		else {
 			CustomerList* prev = h;
@@ -106,17 +106,19 @@ CustomerList* RemoveCustomer(CustomerList* h, int id) {
 	}
 
 	if (aux == NULL) {
+		// Customer with the given id was not found
 		return h;
 	}
 
 	if (prev == NULL) {
-		h = h->next;
-		free(aux);
+		// Removing the first node
+		h = aux->next;
 	}
 	else {
 		prev->next = aux->next;
-		free(aux);
 	}
+
+	free(aux);
 	return h;
 }
 
@@ -149,7 +151,7 @@ bool EditCustomer(CustomerList* h, Customer* c) {
  * 
  * \param h
  */
-void ShowCustomerList(CustomerList* h) {
+void ShowCustomersList(CustomerList* h) {
 	CustomerList* aux = h;
 	while (aux != NULL) {
 		printf("Customer\nID: %d\nName: %s\nNIF: %s\nAddress: %s\nBalance: %0.2f\n",aux->customer.id, aux->customer.name, aux->customer.nif, aux->customer.balance, aux->customer.balance);
@@ -163,7 +165,7 @@ void ShowCustomerList(CustomerList* h) {
  * \param h
  * \return 
  */
-bool ClearCustomerList(CustomerList* h) {
+bool ClearCustomersList(CustomerList* h) {
 	if (h == NULL)return false;
 	CustomerList* aux;
 	while (h != NULL) {

@@ -5,7 +5,6 @@
  * \author Eduardo
  * \date   March 2023
  *********************************************************************/
-#pragma once
 #pragma warning(disable : 4996)
 
 #ifndef MANAGER
@@ -22,53 +21,48 @@ typedef struct Manager{
 	char name[NAME_SIZE];
 	char email[E_SIZE];
 	char password[PW_SIZE];
-	struct Manager* next;
+	//struct Manager* next;
 }Manager;
+
+typedef struct ManagerList {
+	Manager manager;
+	struct ManagerList* next;
+}ManagerList;
 
 /**
  * Carregar uma lista de Gestores de um ficheiro de texto
  */
-Manager* LoadManagers(char f[]);
+ManagerList* LoadManagers(char f[]);
 
-/**
- * Carregar uma lista de Gestores de um ficheiro binário
- */
-//Manager* LoadManagersBin(char fileName[]);
-
-/**
- * Gravar uma lista de Gestores para um ficheiro de texto
- */
-//bool SaveManagers(Manager* h, char f[]);
-
-/**
- * Gravar uma lista de Gestores para um ficheiro binário
- */
-bool SaveManagersBin(Manager* h, char f[]);
+  /**
+   * Gravar uma lista de Gestores para um ficheiro binário
+   */
+bool SaveManagersBin(ManagerList* h, char f[]);
 
 /**
  * Inserir um Gestor a uma lista de Gestores, ordenada por id
  */
-Manager* AddManager(Manager* h, Manager* m);
+ManagerList* AddManager(ManagerList* h, Manager* m);
 
 /**
  * Remover um Gestor com um id definido de uma lista de Gestores
  */
-Manager* RemoveManager(Manager* h, int id);
+ManagerList* RemoveManager(ManagerList* h, int id);
 
 /**
  * Trocar um Gestor de uma lista de Gestores por um com o mesmo id
  */
-bool EditManager(Manager* h, Manager* m);
+bool EditManager(ManagerList* h, Manager* m);
 
 /**
  * Mostrar todos os Gestores em uma lista de Gestores
  */
-void ShowManagerList(Manager* h);
+void ShowManagersList(ManagerList* h);
 
 /**
  * Limpar/Libertar o espaço da memória ocupada por uma lista de Gestores
  */
-bool ClearManagerList(Manager* h);
+bool ClearManagersList(ManagerList* h);
 
 #endif // !MANAGER
 

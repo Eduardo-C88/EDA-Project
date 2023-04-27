@@ -14,15 +14,15 @@
   * \param fileName
   * \return
   */
-Vehicle* LoadVehicles(char fileName[]) {
-	Vehicle* h = NULL;
-	Vehicle aux;
+VehicleList* LoadVehicles(char fileName[]) {
+	VehicleList* h = NULL;
+	VehicleList* aux;
 
 	FILE* fp = fopen(fileName, "r");
 	if (fp == NULL)return NULL;
 
 	while (!feof) {
-		fscanf(fp, "%d;%s;%0.2f;%0.2f;%s\n", &aux.id, aux.type, aux.battery, aux->price, aux->geoCode);//REVER
+		fscanf(fp, "%d;%s;%0.2f;%0.2f;%s\n", aux->vehicle.id, aux->vehicle.type, aux->vehicle.battery, aux->vehicle.price, aux->vehicle.geoCode);
 		h = AddVehicle(h, &aux);
 	}
 	fclose(fp);
@@ -30,64 +30,22 @@ Vehicle* LoadVehicles(char fileName[]) {
 }
 
 /**
- * Carregar uma lista de Transportes de um ficheiro binário
- *
- * \param fileName
- * \return
- */
-//Vehicle* LoadVehiclesBin(char fileName[]) {
-//	Vehicle* h = NULL;
-//
-//	FILE* fp;
-//	fp = fopen(fileName, "rb");
-//	if (fp == NULL)return NULL;
-//
-//	Vehicle aux;
-//	while (fread(&aux, 1, sizeof(Vehicle), fp)) {
-//		h = AddVehicle(h, &aux);
-//	}
-//	fclose(fp);
-//	return h;
-//}
-
-/**
- * Gravar uma lista de Transportes para um ficheiro de texto
- * 
- * \param h
- * \return 
- */
-//bool SaveVehicle(Vehicle* h, char fileName[]) {
-//	FILE* fp;
-//	fp = fopen(fileName, "w");
-//	if (h == NULL) return false;
-//	if (fp == NULL)return false;
-//
-//	Vehicle* current = h;
-//
-//	while (current != NULL) {
-//		fprintf(fp, "%d;%s;%0.2f;%0.2f;%s\n", current->id, current->type, current->battery, current->price, current->geoCode);
-//		current = current->next;
-//	}
-//	fclose(fp);
-//	return true;
-//}
-
-/**
  * Gravar uma lista de Transportes para um ficheiro binário
  * 
  * \param h
  * \return 
  */
-bool SaveVehicleBin(Vehicle* h, char fileName[]) {
+bool SaveVehiclesBin(VehicleList* h, char fileName[]) {
 	if (h == NULL)return false;
-	Vehicle* aux = h;
+	VehicleList* aux = h;
 
 	FILE* fp;
 	fp = fopen(fileName, "wb");
 	if (fp == NULL)return false;
+
 	while (aux != NULL) {
 		aux->next = NULL;
-		fwrite(aux, 1, sizeof(Vehicle), fp);
+		fwrite(aux, 1, sizeof(aux->vehicle), fp);
 		aux = aux->next;
 	}
 	fclose(fp);
@@ -101,24 +59,24 @@ bool SaveVehicleBin(Vehicle* h, char fileName[]) {
  * \param v
  * \return 
  */
-Vehicle* AddVehicle(Vehicle* h, Vehicle* v){
-	Vehicle* aux = (Vehicle*)malloc(sizeof(Vehicle));
+VehicleList* AddVehicle(VehicleList* h, Vehicle* v){
+	VehicleList* aux = (Vehicle*)malloc(sizeof(Vehicle));
 	aux->next = NULL;
-	aux = v;
+	aux->vehicle = *v;
 
 	if (h == NULL) {
-		h = v;
+		h = aux;
 		return h;
 	}
 	else {
-		if (h->id > aux->id) {
+		if (h->vehicle.id > aux->vehicle.id) {
 			aux->next = h;
-			h = v;
+			h = aux;
 		}
 		else {
-			Vehicle* prev = h;
-			Vehicle* current = h;
-			while (current != NULL && current->id < aux->id) {
+			VehicleList* prev = h;
+			VehicleList* current = h;
+			while (current != NULL && current->vehicle.id < aux->vehicle.id) {
 				prev = current;
 				current = current->next;
 			}
@@ -136,13 +94,13 @@ Vehicle* AddVehicle(Vehicle* h, Vehicle* v){
  * \param id
  * \return 
  */
-Vehicle* RemoveVehicle(Vehicle* h, int id) {
+VehicleList* RemoveVehicle(VehicleList* h, int id) {
 	if (h == NULL) return NULL;
 
-	Vehicle* aux = h;
-	Vehicle* prev = NULL;
+	VehicleList* aux = h;
+	VehicleList* prev = NULL;
 
-	while (aux != NULL && aux->id != id) {
+	while (aux != NULL && aux->vehicle.id != id) {
 		prev = aux;
 		aux = aux->next;
 	}
@@ -171,16 +129,16 @@ Vehicle* RemoveVehicle(Vehicle* h, int id) {
  * \param v
  * \return 
  */
-bool EditVehicle(Vehicle* h, Vehicle* v){
+bool EditVehicle(VehicleList* h, Vehicle* v){
 	if (h == NULL || v == NULL)return false;
-	Vehicle* aux = h;
+	VehicleList* aux = h;
 
 	while (aux != NULL) {
-		if (aux->id == v->id) {
-			strcpy(aux->type, v->type);
-			aux->battery = v->battery;
-			aux->price = v->price;
-			strcpy(aux->geoCode, v->geoCode);
+		if (aux->vehicle.id == v->id) {
+			strcpy(aux->vehicle.type, v->type);
+			aux->vehicle.battery = v->battery;
+			aux->vehicle.price = v->price;
+			strcpy(aux->vehicle.geoCode, v->geoCode);
 			return true;
 		}
 		aux = aux->next;
@@ -193,10 +151,10 @@ bool EditVehicle(Vehicle* h, Vehicle* v){
  * 
  * \param h
  */
-void ShowVehicleList(Vehicle* h) {
-	Vehicle* aux = h;
+void ShowVehiclesList(VehicleList* h) {
+	VehicleList* aux = h;
 	while (aux != NULL) {
-		printf("Vehicle\nID: %d\nType: %s\nBattery usage: %0.2f\nPrice: %0.2f\nGeoCode: %s\n",aux->id, aux->type,aux->battery,aux->price,aux->geoCode);
+		printf("Vehicle\nID: %d\nType: %s\nBattery usage: %0.2f\nPrice: %0.2f\nGeoCode: %s\n",aux->vehicle.id, aux->vehicle.type,aux->vehicle.battery,aux->vehicle.price,aux->vehicle.geoCode);
 		aux = aux->next;
 	}
 }
@@ -207,9 +165,9 @@ void ShowVehicleList(Vehicle* h) {
  * \param h
  * \return
  */
-bool ClearVehicleList(Vehicle* h) {
+bool ClearVehiclesList(VehicleList* h) {
 	if (h == NULL)return false;
-	Vehicle* aux;
+	VehicleList* aux;
 	while (h != NULL) {
 		aux = h->next;
 		free(h);
@@ -219,18 +177,75 @@ bool ClearVehicleList(Vehicle* h) {
 }
 
 /**
- * Devolver um Transporte, de tipo definido, de um lista de Transportes 
+ * Devolver um Transporte, com um geocódigo determinado, de um lista de Transportes 
  * 
  * \param h
  * \param type
  * \return 
  */
-Vehicle* SearchVehicle(Vehicle* h, char type[]) {
+Vehicle* SearchVehicle(VehicleList* h, char geocode[]) {
 	if (h == NULL) return h;
-	Vehicle* aux = h;
+	VehicleList* aux = h;
 	while (aux != NULL) {
-		if (strcmp(aux->type, type) == 0)return aux;
+		if (strcmp(aux->vehicle.geoCode, geocode) == 0)return aux;
 		aux = aux->next;
 	}
 	return NULL;
+}
+
+/**
+ * Inserir um Veículo a uma lista de Veículos, ordenada de ordem decrescente por autonomia
+ * 
+ * \param h
+ * \param v
+ * \return 
+ */
+VehicleList* AddVehicleAutDec(VehicleList* h, Vehicle* v) {
+	VehicleList* aux = (Vehicle*)malloc(sizeof(Vehicle));
+	aux->next = NULL;
+	aux->vehicle = *v;
+
+	if (h == NULL) {
+		h = v;
+		return h;
+	}
+	else {
+		if (h->vehicle.battery < aux->vehicle.battery) {
+			aux->next = h;
+			h = v;
+		}
+		else {
+			VehicleList* prev = h;
+			VehicleList* current = h;
+			while (current != NULL && current->vehicle.battery > aux->vehicle.battery) {
+				prev = current;
+				current = current->next;
+			}
+			aux->next = current;
+			prev->next = aux;
+		}
+	}
+	return h;
+}
+
+/**
+ * Listar os Veículos, de uma lista de Veículos já existente, com um determinado geocódigo 
+ * 
+ * \param h
+ * \param v
+ * \param geoCode
+ * \return 
+ */
+VehicleList* AddVehicleGeo(VehicleList* h, VehicleList* l, char* geoCode){
+	if (h == NULL)return l;
+
+	VehicleList* aux = h;
+
+	while (aux->next != NULL) {
+		if (strcmp(aux->vehicle.geoCode, geoCode) == 0) {
+			l = AddVehicle(l, &aux->vehicle);
+		}
+		aux = aux->next;
+	}
+	return l;
 }

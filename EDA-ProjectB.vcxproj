@@ -130,6 +130,7 @@
     <ClInclude Include="Customer.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Manager.h" />
+    <ClInclude Include="Rent.h" />
     <ClInclude Include="Vehicle.h" />
   </ItemGroup>
   <ItemGroup>

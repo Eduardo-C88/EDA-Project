@@ -14,15 +14,15 @@
   * \param fileName
   * \return
   */
-Manager* LoadManagers(char fileName[]) {
-	Manager* h = NULL;
-	Manager* aux = NULL;
+ManagerList* LoadManagers(char fileName[]) {
+	ManagerList* h = NULL;
+	ManagerList* aux = NULL;
 
 	FILE* fp = fopen(fileName, "r");
 	if (fp == NULL)return NULL;
 
 	while (!feof) {
-		fscanf(fp, "%d;%s;%s;%s\n", aux->id, aux->name, aux->email, aux->password);
+		fscanf(fp, "%d;%s;%s;%s\n", aux->manager.id, aux->manager.name, aux->manager.email, aux->manager.password);
 		h = AddManager(h, aux);
 	}
 	fclose(fp);
@@ -30,63 +30,21 @@ Manager* LoadManagers(char fileName[]) {
 }
 
 /**
- * Carregar uma lista de Gestores de um ficheiro binário
- *
- * \param fileName
- * \return
- */
-//Manager* LoadManagersBin(char fileName[]) {
-//	Manager* h = NULL;
-//
-//	FILE* fp;
-//	fp = fopen(fileName, "rb");
-//	if (fp == NULL)return NULL;
-//
-//	Manager* aux;
-//	while (fread(&aux, 1, sizeof(Manager), fp)) {
-//		h = AddManager(h, aux);
-//	}
-//	fclose(fp);
-//	return h;
-//}
-
-/**
- * Gravar uma lista de Gestores para um ficheiro de texto
- * 
- * \param h
- * \return 
- */
-//bool SaveManagers(Manager* h, char fileName[]) {
-//	FILE* fp;
-//	fp = fopen(fileName, "w");
-//	if (h == NULL) return false;
-//	if (fp == NULL)return false;
-//
-//	Manager* current = h;
-//
-//	while (current != NULL) {
-//		fprintf(fp, "%d;%s;%s;%s\n", current->id, current->name, current->email, current->password);
-//		current = current->next;
-//	}
-//	fclose(fp);
-//	return true;
-//}
-
-/**
  * Gravar uma lista de Gestores para um ficheiro binário
  * 
  * \param h
  * \return 
  */
-bool SaveManagersBin(Manager* h, char fileName[]) {
+bool SaveManagersBin(ManagerList* h, char fileName[]) {
 	if (h == NULL)return false;
-	Manager* aux = h;
+	ManagerList* aux = h;
 
 	FILE* fp;
 	fp = fopen(fileName, "wb");
 	if (fp == NULL)return false;
+
 	while (aux != NULL) {
-		fwrite(aux, 1, sizeof(Manager), fp);
+		fwrite(&aux, 1, sizeof(aux->manager), fp);
 		aux = aux->next;
 	}
 	fclose(fp);
@@ -100,24 +58,24 @@ bool SaveManagersBin(Manager* h, char fileName[]) {
  * \param m
  * \return 
  */
-Manager* AddManager(Manager* h, Manager* m) {
-	Manager* aux = (Manager*)malloc(sizeof(Manager));
+ManagerList* AddManager(ManagerList* h, Manager* m) {
+	ManagerList* aux = (Manager*)malloc(sizeof(Manager));
 	aux->next = NULL;
-	aux = m;
+	aux->manager = *m;
 
 	if (h == NULL) {
-		h = m;
+		h = aux;
 		return h;
 	}
 	else {
-		if (h->id > aux->id) {
+		if (h->manager.id > aux->manager.id) {
 			aux->next = h;
-			h = m;
+			h = aux;
 		}
 		else {
-			Manager* prev = h;
-			Manager* current = h;
-			while (current != NULL && current->id < aux->id) {
+			ManagerList* prev = h;
+			ManagerList* current = h;
+			while (current != NULL && current->manager.id < aux->manager.id) {
 				prev = current;
 				current = current->next;
 			}
@@ -125,7 +83,6 @@ Manager* AddManager(Manager* h, Manager* m) {
 			prev->next = aux;
 		}
 	}
-
 	return h;
 }
 
@@ -136,13 +93,13 @@ Manager* AddManager(Manager* h, Manager* m) {
  * \param id
  * \return 
  */
-Manager* RemoveManager(Manager* h, int id) {
+ManagerList* RemoveManager(ManagerList* h, int id) {
 	if (h == NULL) return NULL;
 
-	Manager* aux = h;
-	Manager* prev = NULL;
+	ManagerList* aux = h;
+	ManagerList* prev = NULL;
 
-	while (aux != NULL && aux->id != id) {
+	while (aux != NULL && aux->manager.id != id) {
 		prev = aux;
 		aux = aux->next;
 	}
@@ -171,15 +128,15 @@ Manager* RemoveManager(Manager* h, int id) {
  * \param m
  * \return 
  */
-bool EditManager(Manager* h, Manager* m){
+bool EditManager(ManagerList* h, Manager* m){
 	if (h == NULL || m == NULL)return false;
-	Manager* aux = h;
+	ManagerList* aux = h;
 
 	while (aux != NULL) {
-		if (aux->id == m->id) {
-			strcpy(aux->name, m->name);
-			strcpy(aux->email, m->email);
-			strcpy(aux->password, m->password);
+		if (aux->manager.id == m->id) {
+			strcpy(aux->manager.name, m->name);
+			strcpy(aux->manager.email, m->email);
+			strcpy(aux->manager.password, m->password);
 			return true;
 		}
 		aux = aux->next;
@@ -192,10 +149,10 @@ bool EditManager(Manager* h, Manager* m){
  * 
  * \param h
  */
-void ShowManagerList(Manager* h){
-	Manager* aux = h;
+void ShowManagersList(ManagerList* h){
+	ManagerList* aux = h;
 	while (aux != NULL) {
-		printf("Manager\nID: %d\nName: %s\ne-mail: %s\nPassword: %s\n",aux->id, aux->name, aux->email, aux->password);
+		printf("Manager\nID: %d\nName: %s\ne-mail: %s\nPassword: %s\n",aux->manager.id, aux->manager.name, aux->manager.email, aux->manager.password);
 		aux = aux->next;
 	}
 }
@@ -206,9 +163,9 @@ void ShowManagerList(Manager* h){
  * \param h
  * \return
  */
-bool ClearManagerList(Manager* h) {
+bool ClearManagersList(ManagerList* h) {
 	if (h == NULL)return false;
-	Manager* aux;
+	ManagerList* aux;
 	while (h != NULL) {
 		aux = h->next;
 		free(h);
