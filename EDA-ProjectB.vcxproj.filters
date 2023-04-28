@@ -30,6 +30,9 @@
     <ClInclude Include="Rent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Graphs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Program.c">
@@ -42,6 +45,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Manager.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Rent.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

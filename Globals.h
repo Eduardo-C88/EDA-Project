@@ -14,6 +14,7 @@
 #include "Customer.h"
 #include "Manager.h"
 #include "Vehicle.h"
+#include "Rent.h"
 
 //struct aluger() {
 //

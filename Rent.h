@@ -26,7 +26,7 @@ enum Month {
 
 typedef struct Date {
 	int day;
-	Month month;
+	enum Month month;
 	int year;
 }Date;
 

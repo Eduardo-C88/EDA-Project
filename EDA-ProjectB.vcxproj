@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClInclude Include="Customer.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="Graphs.h" />
     <ClInclude Include="Manager.h" />
     <ClInclude Include="Rent.h" />
     <ClInclude Include="Vehicle.h" />
@@ -137,6 +138,7 @@
     <ClCompile Include="Customer.c" />
     <ClCompile Include="Manager.c" />
     <ClCompile Include="Program.c" />
+    <ClCompile Include="Rent.c" />
     <ClCompile Include="Vehicle.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
