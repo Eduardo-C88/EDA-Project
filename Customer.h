@@ -12,9 +12,9 @@
 
 #include "Globals.h"
 
-#define NAME_SIZE 20
+#define NAME_SIZE 50
 #define NIF_SIZE 10
-#define ADD_SIZE 30
+#define ADD_SIZE 50
 
 typedef struct Customer {
 	int id;

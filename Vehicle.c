@@ -16,14 +16,14 @@
   */
 VehicleList* LoadVehicles(char fileName[]) {
 	VehicleList* h = NULL;
-	VehicleList* aux;
+	Vehicle* aux = (Vehicle*)malloc(sizeof(Vehicle));
 
 	FILE* fp = fopen(fileName, "r");
 	if (fp == NULL)return NULL;
 
-	while (!feof) {
-		fscanf(fp, "%d;%s;%0.2f;%0.2f;%s\n", aux->vehicle.id, aux->vehicle.type, aux->vehicle.battery, aux->vehicle.price, aux->vehicle.geoCode);
-		h = AddVehicle(h, &aux);
+	while (!feof(fp)) {
+		fscanf(fp, "%d;%s;%0.2f;%0.2f;%s\n", &aux->id, aux->type, &aux->battery, &aux->price, aux->local);
+		h = AddVehicle(h, aux);
 	}
 	fclose(fp);
 	return h;
@@ -60,7 +60,7 @@ bool SaveVehiclesBin(VehicleList* h, char fileName[]) {
  * \return 
  */
 VehicleList* AddVehicle(VehicleList* h, Vehicle* v){
-	VehicleList* aux = (Vehicle*)malloc(sizeof(Vehicle));
+	VehicleList* aux = (VehicleList*)malloc(sizeof(VehicleList));
 	aux->next = NULL;
 	aux->vehicle = *v;
 
@@ -138,7 +138,7 @@ bool EditVehicle(VehicleList* h, Vehicle* v){
 			strcpy(aux->vehicle.type, v->type);
 			aux->vehicle.battery = v->battery;
 			aux->vehicle.price = v->price;
-			strcpy(aux->vehicle.geoCode, v->geoCode);
+			strcpy(aux->vehicle.local, v->local);
 			return true;
 		}
 		aux = aux->next;
@@ -154,7 +154,7 @@ bool EditVehicle(VehicleList* h, Vehicle* v){
 void ShowVehiclesList(VehicleList* h) {
 	VehicleList* aux = h;
 	while (aux != NULL) {
-		printf("Vehicle\nID: %d\nType: %s\nBattery usage: %0.2f\nPrice: %0.2f\nGeoCode: %s\n",aux->vehicle.id, aux->vehicle.type,aux->vehicle.battery,aux->vehicle.price,aux->vehicle.geoCode);
+		printf("ID: %d\nType: %s\nBattery usage: %0.2f\nPrice: %0.2f\nLocation: %s\n",aux->vehicle.id, aux->vehicle.type,aux->vehicle.battery,aux->vehicle.price,aux->vehicle.local);
 		aux = aux->next;
 	}
 }
@@ -183,11 +183,11 @@ bool ClearVehiclesList(VehicleList* h) {
  * \param type
  * \return 
  */
-Vehicle* SearchVehicle(VehicleList* h, char geocode[]) {
+VehicleList* SearchVehicle(VehicleList* h, char local[]) {
 	if (h == NULL) return h;
 	VehicleList* aux = h;
 	while (aux != NULL) {
-		if (strcmp(aux->vehicle.geoCode, geocode) == 0)return aux;
+		if (strcmp(aux->vehicle.local, local) == 0)return aux;
 		aux = aux->next;
 	}
 	return NULL;
@@ -201,18 +201,19 @@ Vehicle* SearchVehicle(VehicleList* h, char geocode[]) {
  * \return 
  */
 VehicleList* AddVehicleAutDec(VehicleList* h, Vehicle* v) {
-	VehicleList* aux = (Vehicle*)malloc(sizeof(Vehicle));
+
+	VehicleList* aux = (VehicleList*)malloc(sizeof(VehicleList));
 	aux->next = NULL;
 	aux->vehicle = *v;
 
 	if (h == NULL) {
-		h = v;
+		h = aux;
 		return h;
 	}
 	else {
 		if (h->vehicle.battery < aux->vehicle.battery) {
 			aux->next = h;
-			h = v;
+			h = aux;
 		}
 		else {
 			VehicleList* prev = h;
@@ -236,13 +237,13 @@ VehicleList* AddVehicleAutDec(VehicleList* h, Vehicle* v) {
  * \param geoCode
  * \return 
  */
-VehicleList* AddVehicleGeo(VehicleList* h, VehicleList* l, char* geoCode){
+VehicleList* AddVehicleGeo(VehicleList* h, VehicleList* l, char* local){
 	if (h == NULL)return l;
 
 	VehicleList* aux = h;
 
-	while (aux->next != NULL) {
-		if (strcmp(aux->vehicle.geoCode, geoCode) == 0) {
+	while (aux != NULL) {
+		if (strcmp(aux->vehicle.local, local) == 0) {
 			l = AddVehicle(l, &aux->vehicle);
 		}
 		aux = aux->next;

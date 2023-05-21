@@ -50,5 +50,8 @@
     <ClCompile Include="Rent.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Graphs.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

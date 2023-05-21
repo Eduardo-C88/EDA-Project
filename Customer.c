@@ -16,13 +16,13 @@
   */
 CustomerList* LoadCustomers(char fileName[]) {
 	CustomerList* h = NULL;
-	CustomerList* aux = NULL;
+	Customer* aux = (Customer*)malloc(sizeof(Customer));
 
 	FILE* fp = fopen(fileName, "r");
 	if (fp == NULL)return NULL;
 
-	while (!feof) {
-		fscanf(fp, "%d;%s;%s;%s;%0.2f\n", aux->customer.id, aux->customer.name, aux->customer.nif, aux->customer.address, aux->customer.balance);
+	while (!feof(fp)) {
+		fscanf(fp, "%d;%s;%s;%s;%0.2f\n", &aux->id, aux->name, aux->nif, aux->address, &aux->balance);
 		h = AddCustomer(h, aux);
 	}
 	fclose(fp);
@@ -60,7 +60,8 @@ bool SaveCustomersBin(CustomerList* h, char fileName[]) {
  * \return 
  */
 CustomerList* AddCustomer(CustomerList* h, Customer* c) {
-	CustomerList* aux = (Customer*)malloc(sizeof(Customer));
+	if (c == NULL)return h;
+	CustomerList* aux = (CustomerList*)malloc(sizeof(CustomerList));
 	aux->next = NULL;
 	aux->customer = *c;
 
@@ -154,7 +155,7 @@ bool EditCustomer(CustomerList* h, Customer* c) {
 void ShowCustomersList(CustomerList* h) {
 	CustomerList* aux = h;
 	while (aux != NULL) {
-		printf("Customer\nID: %d\nName: %s\nNIF: %s\nAddress: %s\nBalance: %0.2f\n",aux->customer.id, aux->customer.name, aux->customer.nif, aux->customer.balance, aux->customer.balance);
+		printf("ID: %d\nName: %s\nNIF: %s\nAddress: %s\nBalance: %0.2f\n",aux->customer.id, aux->customer.name, aux->customer.nif, aux->customer.address, aux->customer.balance);
 		aux = aux->next;
 	}
 }

@@ -136,6 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Customer.c" />
+    <ClCompile Include="Graphs.c" />
     <ClCompile Include="Manager.c" />
     <ClCompile Include="Program.c" />
     <ClCompile Include="Rent.c" />

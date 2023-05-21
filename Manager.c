@@ -16,13 +16,13 @@
   */
 ManagerList* LoadManagers(char fileName[]) {
 	ManagerList* h = NULL;
-	ManagerList* aux = NULL;
+	Manager* aux = (Manager*)malloc(sizeof(Manager));
 
 	FILE* fp = fopen(fileName, "r");
 	if (fp == NULL)return NULL;
 
-	while (!feof) {
-		fscanf(fp, "%d;%s;%s;%s\n", aux->manager.id, aux->manager.name, aux->manager.email, aux->manager.password);
+	while (!feof(fp)) {
+		fscanf(fp, "%d;%s;%s;%s\n", &aux->id, aux->name, aux->email, aux->password);
 		h = AddManager(h, aux);
 	}
 	fclose(fp);
@@ -59,7 +59,7 @@ bool SaveManagersBin(ManagerList* h, char fileName[]) {
  * \return 
  */
 ManagerList* AddManager(ManagerList* h, Manager* m) {
-	ManagerList* aux = (Manager*)malloc(sizeof(Manager));
+	ManagerList* aux = (ManagerList*)malloc(sizeof(ManagerList));
 	aux->next = NULL;
 	aux->manager = *m;
 
@@ -152,7 +152,7 @@ bool EditManager(ManagerList* h, Manager* m){
 void ShowManagersList(ManagerList* h){
 	ManagerList* aux = h;
 	while (aux != NULL) {
-		printf("Manager\nID: %d\nName: %s\ne-mail: %s\nPassword: %s\n",aux->manager.id, aux->manager.name, aux->manager.email, aux->manager.password);
+		printf("ID: %d\nName: %s\ne-mail: %s\nPassword: %s\n",aux->manager.id, aux->manager.name, aux->manager.email, aux->manager.password);
 		aux = aux->next;
 	}
 }

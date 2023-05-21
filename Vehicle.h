@@ -12,21 +12,20 @@
 
 #include "Globals.h"
 
-#define TYPE_SIZE 15
-#define CODE_SIZE 20
+#define TYPE_SIZE 20
 
 typedef struct Vehicle{
 	int id;
 	char type[TYPE_SIZE];
 	float battery;
-	float price;               //por distância
-	char geoCode[CODE_SIZE];
+	float price;                   //por distância
+	char local[NAME_SIZE];
 	//struct Vehicle* next;
 }Vehicle;
 
 typedef struct VehicleList {
 	Vehicle vehicle;
-	struct VehicleList* next
+	struct VehicleList* next;
 }VehicleList;
 
 /**
@@ -67,7 +66,7 @@ bool ClearVehiclesList(VehicleList* h);
 /**
  * Devolver um Veículo, com um geocódigo determinado, de um lista de Veículos
  */
-Vehicle* SearchVehicle(VehicleList* h, char g[]);
+VehicleList* SearchVehicle(VehicleList* h, char g[]);
 
 /**
  * Inserir um Veículo a uma lista de Veículos, ordenada de ordem decrescente por autonomia
@@ -77,7 +76,7 @@ VehicleList* AddVehicleAutDec(VehicleList* h, Vehicle* v);
 /**
  * Listar os Veículos, de uma lista de Veículos já existente, com um determinado geocódigo 
  */
-VehicleList* AddVehicleGeo(VehicleList* h, VehicleList* v, char* geoCode);
+VehicleList* AddVehicleGeo(VehicleList* h, VehicleList* v, char* local);
 #endif
 
 

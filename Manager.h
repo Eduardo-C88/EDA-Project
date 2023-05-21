@@ -12,9 +12,9 @@
 
 #include "Globals.h"
 
-#define NAME_SIZE 20
+#define NAME_SIZE 50
 #define E_SIZE 50
-#define PW_SIZE 20
+#define PW_SIZE 16
 
 typedef struct Manager{
 	int id;
