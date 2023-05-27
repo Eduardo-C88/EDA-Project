@@ -22,7 +22,7 @@ VehicleList* LoadVehicles(char fileName[]) {
 	if (fp == NULL)return NULL;
 
 	while (!feof(fp)) {
-		fscanf(fp, "%d;%s;%0.2f;%0.2f;%s\n", &aux->id, aux->type, &aux->battery, &aux->price, aux->local);
+		fscanf(fp,"%d;%s;%0.2f;%0.2f;%s\n", &aux->id, aux->type, &aux->battery, &aux->price, aux->local);
 		h = AddVehicle(h, aux);
 	}
 	fclose(fp);
@@ -237,16 +237,41 @@ VehicleList* AddVehicleAutDec(VehicleList* h, Vehicle* v) {
  * \param geoCode
  * \return 
  */
-VehicleList* AddVehicleGeo(VehicleList* h, VehicleList* l, char* local){
-	if (h == NULL)return l;
+VehicleList* AddVehicleGeo(VehicleList* h, char* local){
+	if (h == NULL)return NULL;
 
 	VehicleList* aux = h;
+	VehicleList* final = NULL;
 
 	while (aux != NULL) {
 		if (strcmp(aux->vehicle.local, local) == 0) {
-			l = AddVehicle(l, &aux->vehicle);
+			final = AddVehicle(final, &aux->vehicle);
 		}
 		aux = aux->next;
 	}
-	return l;
+	return final;
+}
+
+
+/**
+ * Listar os Veículos, de uma lista de Veículos já existente, com um determinado tipo
+ *
+ * \param h
+ * \param v
+ * \param geoCode
+ * \return
+ */
+VehicleList* AddVehicleType(VehicleList* h, char* type) {
+	if (h == NULL)return NULL;
+
+	VehicleList* aux = h;
+	VehicleList* final = NULL;
+
+	while (aux != NULL) {
+		if (strcmp(aux->vehicle.type, type) == 0) {
+			final = AddVehicle(final, &aux->vehicle);
+		}
+		aux = aux->next;
+	}
+	return final;
 }

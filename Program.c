@@ -9,6 +9,7 @@
 #include "Globals.h"
 
 int main() {
+#pragma region FASE 1
 	int cTot = 1;
 	int mTot = 1;
 	int vTot = 1;
@@ -41,11 +42,15 @@ int main() {
 
 	autList = AddVehicleAutDec(autList, &v1);
 	autList = AddVehicleAutDec(autList, &v2);
+	autList = AddVehicleAutDec(autList, &v3);
 
-	geoList = AddVehicleGeo(vHeader, geoList, "Braga");
+	geoList = AddVehicleGeo(vHeader, "Braga");
 
+	
 	ShowVehiclesList(autList);
+	printf("\n");
 	ShowVehiclesList(geoList);
+	printf("\n");
 
 	cHeader = RemoveCustomer(cHeader, 2);
 
@@ -60,8 +65,9 @@ int main() {
 	bool mSave = SaveManagersBin(mHeader, "ManagersSave.bin");
 	bool vSave = SaveVehiclesBin(vHeader, "vehiclesSave.bin");
 
-	printf("-----------------------------------\n");
-
+#pragma endregion
+	printf("-----------------------------------\n");	
+#pragma region FASE 2
 	Town* graph = CreateGraph();
 	int townTot = 1;
 
@@ -80,23 +86,36 @@ int main() {
 		graph = AddTown(graph, newTown);
 	}
 
-	//int pathTot = 1;
-	//Path* pHeader = NULL;
+	//RentList* rHeader = NULL;
 
-	//Path* newPath = CreatePath(pathTot++, "Braga", 30.26);
-	//pHeader = AddPath(pHeader, newPath);
+	//Date d1 = { 12, 6, 2022 };
+	//Date d2 = { 25, 8, 2022 };
+	//Rent* newRent = CreateRent(&c1, &v1, d1, d2);
+	//if (newRent != NULL) {
+	//	rHeader = AddRent(rHeader, newRent);
+	//}
 
-	//ShowPaths(pHeader);
+	int pathTot = 1;
+	Path* newPath = CreatePath(pathTot++, "Braga", 30.26);
+	graph = AddPathToTown(graph, "Barcelos", newPath->dest, newPath->dist);
 
+	newPath = CreatePath(pathTot++, "Porto", 42.31);
+	graph = AddPathToTown(graph, "Barcelos", newPath->dest, newPath->dist);
+
+	newPath = CreatePath(pathTot++, "Porto", 42.31);
+	graph = AddPathToTown(graph, "Braga", newPath->dest, newPath->dist);
+
+	newPath = CreatePath(pathTot++, "Braga", 42.31);
+	graph = AddPathToTown(graph, "Porto", newPath->dest, newPath->dist);
+
+	ShowTowns(graph);
+	printf("\n---------------------------------\n");
 	ShowGraph(graph);
-
-
-
-
 
 	bool clear = ClearCustomersList(cHeader);
 	clear = ClearManagersList(mHeader);
 	clear = ClearVehiclesList(vHeader);
 	clear = ClearVehiclesList(autList);
 	clear = ClearVehiclesList(geoList);
+#pragma endregion
 }

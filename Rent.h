@@ -15,16 +15,38 @@
 //	int year;
 //}Date;
 //
+//// Dias de todos os meses
+//// de Janeiro a Decembro
+//const int monthDays[12]
+//= { 31, 28, 31, 30, 31, 30,
+//   31, 31, 30, 31, 30, 31 };
+//
 //typedef struct Rent {
 //	Customer customer;
-//	Manager manager;
 //	Vehicle vehicle;
-//	Date date;
+//	Date dateStart;
+//	Date dateEnd;
+//	int cost;
+//	struct Rent* next;
 //}Rent;
 //
 //typedef struct RentList {
 //	Rent rent;
 //	struct RentList* next;
 //}RentList;
+//
+//
+//int countLeapYears(Date d);
+//
+//int getDifference(Date dt1, Date dt2);
+//
+//float CostCalc(Vehicle* v, Date start, Date end);
+//
+//Rent* CreateRent(Customer* customer, Vehicle* vehicle, Date start, Date end);
+//
+//RentList* AddRent(RentList* h, Rent* new);
+//
+//RentList* AddRentType(RentList* h, char* type);
+
 
 

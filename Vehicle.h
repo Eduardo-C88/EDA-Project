@@ -74,9 +74,14 @@ VehicleList* SearchVehicle(VehicleList* h, char g[]);
 VehicleList* AddVehicleAutDec(VehicleList* h, Vehicle* v);
 
 /**
- * Listar os Veículos, de uma lista de Veículos já existente, com um determinado geocódigo 
+ * Listar os Veículos, de uma lista de Veículos já existente, em um determinado local
  */
-VehicleList* AddVehicleGeo(VehicleList* h, VehicleList* v, char* local);
+VehicleList* AddVehicleGeo(VehicleList* h, char* local);
+
+/**
+ * Listar os Veículos, de uma lista de Veículos já existente, com um determinado tipo
+ */
+VehicleList* AddVehicleType(VehicleList* h, char* type);
 #endif
 
 

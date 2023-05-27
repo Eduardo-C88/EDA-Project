@@ -8,9 +8,9 @@
 
 #include "Graphs.h"
 
-#pragma region GRAPHS
+#pragma region GRAPH
 /**
- * ...
+ * Inicializa o Grafo
  * 
  * \return 
  */
@@ -19,7 +19,7 @@ Town* CreateGraph() {
 }
 
 /**
- * ...
+ * Cria uma Cidade(Vértice)
  * 
  * \param town
  * \param geoCode
@@ -32,14 +32,15 @@ Town* CreateTown(int cod, char town[], char geoCode[]) {
 	new->cod = cod;
 	strcpy(new->geoCode, geoCode);
 	strcpy(new->tName, town);
+	new->vehicles = NULL;
 	new->next = NULL;
 	new->paths = NULL;
 
 	return new;
 }
-
+	
 /**
- * ...
+ * Adiciona uma Cidade(Vértice) ao Grafo, ordenado por código da Cidade
  * 
  * \param g
  * \param 
@@ -56,11 +57,11 @@ Town* AddTown(Town* g, Town* new) {
 		Town* aux = g;
 		Town* prev = aux;
 
-		while (aux != NULL && strcmp(aux->tName, new->tName) < 0) {  //ordenar alfabeticamente
+		while (aux != NULL && aux->cod < new->cod) {  //ordenar por código
 			prev = aux;
 			aux = aux->next;
 		}
-		if (aux = g) {
+		if (aux == g) {
 			new->next = g;
 			g = new;
 		}
@@ -73,21 +74,36 @@ Town* AddTown(Town* g, Town* new) {
 }
 
 /**
- * ...
+ * Mostra as Cidades(Vértices) e respetivos caminhos(Adjacências)
  * 
  * \param g
  */
 void ShowGraph(Town* g){
 	if (g == NULL)return;
 
-	printf("Town: %s\n\tGeoCode: %s\n\tCode: %d\n",g->tName, g->geoCode, g->cod);
+	Town* aux = g;
+	printf("Town: %s\n\tGeoCode: %s\n\tCode: %d\n",aux->tName, aux->geoCode, aux->cod);
 	
-	ShowPaths(g->paths);
-	ShowGraph(g->next);
+	ShowPaths(aux->paths);
+	ShowGraph(aux->next);
 }
 
 /**
- * ...
+ * Mostra a lista de Cidades(Vértices)
+ *
+ * \param g
+ */
+void ShowTowns(Town* g) {
+	if (g == NULL)return;
+
+	Town* aux = g;
+	printf("Town: %s\n\tGeoCode: %s\n\tCode: %d\n", aux->tName, aux->geoCode, aux->cod);
+
+	ShowGraph(aux->next);
+}
+
+/**
+ * Procura por uma Cidade(Vértice) por nome no Grafo
  * 
  * \param g
  * \param tName
@@ -100,17 +116,78 @@ Town* SearchTown(Town* g, char* tName) {
 }
 
 /**
- * ...
+ * A partir de uma lista de Veículos já exstente, insere-os na lista de Veículos da respetica Cidade(Vértice)
+ * 
+ * \param t
+ * \param vList
+ * \return 
+ */
+Town* AddVehicleTown(Town* g, char* town, VehicleList* vList) {
+	if (g == NULL)return NULL;
+	if (vList == NULL)return g;
+
+	Town* aux = g;
+
+	Town* temp = SearchTown(aux, town);
+	temp->vehicles = AddVehicleGeo(vList, town);
+
+	return temp;	
+}
+
+/**
+ * Liberta a memória usada tanto pelas Cidade(Vérticese) e
+ * pelos Caminhos(Adjacências)
+ * 
+ * \param g
+ * \return		
+ */
+Town* DestroyGraph(Town* g) {
+	if (g == NULL) return NULL;
+	Town* aux = NULL;
+	while (g) {
+		if (g->next)
+			aux = g->next;
+		g->paths = DestroyAdj(g->paths);
+		free(g);
+		g = aux;
+		aux = NULL;
+	}
+	return g;
+}
+
+/**
+ * Carrega as Cidades(Vértices) a partir de um ficheiro binário
+ * 
+ * \param h
+ * \param fileName
+ * \return 
+ */
+Town* LoadGraph(Town* h, char* fileName) {
+	FILE* fp = fopen(fileName, "rb");
+	if (fp == NULL) return NULL;
+	TownFile aux;
+	Town* new;
+	while (fread(&aux, 1, sizeof(TownFile), fp)) {
+		new = CreateTown(aux.cod, aux.tName, aux.geoCode);
+		h = AddTown(h, new);
+	}
+	fclose(fp);
+	return h;
+}
+
+/**
+ * Grava as Cidades(Vértices) e Caminhos(Adjacências) em um ficheiro binário
  * 
  * \param g
  * \param fileName
  * \return 
  */
-int SaveTowns(Town* g, char* fileName) {
+int SaveGraph(Town* g, char* fileName) {
 	if (g == NULL) return -1;
 	FILE* fp;
 	fp = fopen(fileName, "wb");
 	if (fp == NULL) return 0;
+	int r;
 
 	Town* aux = g;
 	TownFile tFile;
@@ -119,6 +196,9 @@ int SaveTowns(Town* g, char* fileName) {
 		strcpy(tFile.tName, aux->tName);
 		strcpy(tFile.geoCode, aux->geoCode);
 		fwrite(&tFile, sizeof(tFile), 1, fp);
+		if (aux->paths != NULL) {
+			r = SavePaths(aux->paths, aux->tName, aux->cod);
+		}
 		aux = aux->next;
 	}
 	fclose(fp);
@@ -128,7 +208,7 @@ int SaveTowns(Town* g, char* fileName) {
 
 #pragma region EDGES
 /**
- * ...
+ * Cria um Caminho(Adjacência)
  * 
  * \param cod
  * \param dest
@@ -148,7 +228,7 @@ Path* CreatePath(int cod, char* dest, float dist) {
 }
 
 /**
- * ...
+ * Verifica se o Caminho(Adjacência) existe pelo seu código
  * 
  * \param h
  * \param cod
@@ -156,17 +236,14 @@ Path* CreatePath(int cod, char* dest, float dist) {
  */
 bool CheckPath(Path* h, int cod) {
 	if (h == NULL)return false;
-	
-	Path* aux = h;
-	while (aux != NULL) {
-		if (aux->cod == cod)return true;
-		aux = aux->next;
-	}
-	return false;
+		
+	if (h->cod == cod) return true;
+
+	return CheckPath(h->next, cod);
 }
 
 /**
- * ...
+ * Adiciona um Caminho(Adjacência) a uma lista de Caminhos
  * 
  * \param h
  * \param 
@@ -174,49 +251,132 @@ bool CheckPath(Path* h, int cod) {
  */
 Path* AddPath(Path* h, Path* new) {
 	if (new == NULL)return h;
+
 	if (CheckPath(h, new->cod))return h;
+
 	if (h == NULL) {
 		h = new;
 		return h;
 	}
-	else {
-		Path* aux = h;
-		Path* prev = aux;
-		while (aux != NULL && strcmp(aux->dest, new->dest) < 0) {
-			prev = aux;
-			aux = aux->next;
-		}
-		if (aux == h) {
-			new->next = aux;
-			h = new;
-		}
-		else {
-			new->next = aux;
-			prev->next = new;
-		}
-	}
+	new->next = h;
+	h = new;
+
 	return h;
 }
 
 /**
- * ...
+ * Mostra a lista de Caminhos(Adjacências)
  * 
  * \param h
  */
 void ShowPaths(Path* h) {
 	if (h == NULL)return;
-	printf("\tDestination: %s - Distance: %0.2f - Code:%d\n", h->dest, h->dist, h->cod);
-	ShowPaths(h->next);
+
+	Path* aux = h;
+	printf("\tDestination: %s - Distance: %0.2f - Code:%d\n", aux->dest, aux->dist, aux->cod);
+	ShowPaths(aux->next);
 }
 
 /**
- * ...
+ * Liberta a memória usada pelos Caminhos(Adjacências)
  * 
+ * \param h
+ * \return 
+ */
+Path* DestroyPaths(Path* h) {
+	if (h == NULL) return NULL;
+	Path* aux = NULL;
+	while (h) {
+		if (h->next != NULL)
+			aux = h->next;
+		free(h);
+		h = aux;
+		aux = NULL;
+	}
+	return h;
+}
+
+/**
+ * Carrega os Caminhos(Adjacências) a partir de um ficheiro binário
+ * 
+ * \param g
+ * \return 
+ */
+Town* LoadAdj(Town* g) {
+	FILE* fp;
+
+	PathFile aux;
+	Town* auxGraph = g;
+	while (auxGraph) {
+		fp = fopen(auxGraph->tName, "rb");
+		if (fp != NULL) {
+			while (fread(&aux, 1, sizeof(PathFile), fp)) {
+				g = AddPathToTown(g, aux.town, aux.dest, aux.dist);
+			}
+			fclose(fp);
+		}
+		auxGraph = auxGraph->next;
+	}
+	return g;
+}
+
+/**
+ * Grava os Caminhos(Adjacências) em um ficheiro binário
+ * 
+ * \param h
+ * \param fileName
+ * \param verCode
+ * \return 
+ */
+int SavePaths(Path* h, char* fileName, int cod) {
+	//if (h == NULL) return -1;
+
+	//FILE* fp;
+	//fp = fopen(fileName, "wb");
+	//if (fp == NULL) return 0;
+	//
+	//Path* aux = h;
+	//PathFile pFile; 
+	//while (aux != NULL) {
+	//	pFile.cod = aux->cod;
+	//	strcpy(pFile.town, town);
+	//	strcpy(pFile.dest, aux->dest);
+	//	pFile.dist = aux->dist;
+	//	fwrite(&pFile, sizeof(pFile), 1, fp);
+	//	aux = aux->next;
+	//}
+	//fclose(fp);
+	//return 1;
+}
+#pragma endregion
+
+#pragma region ALGORITIMOS
+
+/**
+ * Mostra a lista de Veículos de uma respetiva Cidade(Vértice)
+ *
+ * \param g
+ * \param town
+ */
+void ShowTownVehicles(Town* g, char* town) {
+	if (g == NULL)return;
+
+	Town* aux = g;
+	Town* temp = SearchTown(aux, town);
+	if (temp == NULL)return;
+
+	ShowVehiclesList(temp->vehicles);
+}
+
+/**
+ * Insere um Caminho(Adjacência) à lista de Caminhos da respetiva Cidade(Vértice)
+ * definindo o destino e o peso do mesmo
+ *
  * \param g
  * \param start
  * \param dest
  * \param dist
- * \return 
+ * \return
  */
 Town* AddPathToTown(Town* g, char* start, char* dest, float dist) {
 	if (g == NULL)return NULL;
@@ -229,35 +389,38 @@ Town* AddPathToTown(Town* g, char* start, char* dest, float dist) {
 
 	Path* newPath = CreatePath(d->cod, dest, dist);
 	aux->paths = AddPath(aux->paths, newPath);
-	return g;
+	return aux;
 }
 
 /**
- * ...
- * 
- * \param h
- * \param fileName
- * \param verCode
- * \return 
+ * Define uma lista de Veículos de um determinado tipo
+ * dentro de um certo raio de distância de uma Cidade(Vértice)
+ *
+ * \param g
+ * \param start
+ * \param type
+ * \param radius
+ * \return
  */
-int SavePaths(Path* h, char* fileName, char* town) {
-	if (h == NULL) return -1;
+VehicleList* VehicleTypeRadius(Town* g, char* start, char* type, float radius) {
+	if (g == NULL)return NULL;
 
-	FILE* fp;
-	fp = fopen(fileName, "wb");
-	if (fp == NULL) return 0;
-	 
-	Path* aux = h;
-	PathFile pFile;
-	while (aux != NULL) {
-		pFile.cod = aux->cod;
-		strcpy(pFile.town, town);
-		strcpy(pFile.dest, aux->dest);
-		pFile.dist = aux->dist;
-		fwrite(&pFile, sizeof(pFile), 1, fp);
-		aux = aux->next;
+	float totalDist = 0;
+	VehicleList* final = NULL;
+
+	Town* aux = SearchTown(g, start);
+	if (aux == NULL)return NULL;
+
+	Path* paths = aux->paths;
+	while (paths != NULL && totalDist <= radius) {
+		Town* t = SearchTown(g, paths->dest);
+		totalDist += paths->dist;
+
+		final = AddVehicleType(t->vehicles, type);
+
+		paths = paths->next;
 	}
-	fclose(fp);
-	return 1;
+	return final;
 }
 #pragma endregion
+
