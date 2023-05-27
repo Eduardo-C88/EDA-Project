@@ -1,6 +1,6 @@
 /*****************************************************************//**
  * \file   Rent.c
- * \brief  
+ * \brief  Funções para os Alugueres
  * 
  * \author Eduardo
  * \date   April 2023

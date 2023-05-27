@@ -1,6 +1,6 @@
 /*****************************************************************//**
  * \file   Graphs.h
- * \brief  ...
+ * \brief  Declaração das structs e funções para o Grafo
  * 
  * \author Eduardo
  * \date   April 2023

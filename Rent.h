@@ -1,6 +1,6 @@
 /*****************************************************************//**
  * \file   Rent.h
- * \brief  
+ * \brief  Declaração da struct e funções para os Alugueres
  * 
  * \author Utilizador
  * \date   April 2023

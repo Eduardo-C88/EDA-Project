@@ -1,6 +1,6 @@
 /*****************************************************************//**
  * \file   Graphs.c
- * \brief  ...
+ * \brief  Funções para gerenciamento do Grafo
  * 
  * \author Eduardo
  * \date   May 2023
