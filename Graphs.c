@@ -147,7 +147,7 @@ Town* DestroyGraph(Town* g) {
 	while (g) {
 		if (g->next)
 			aux = g->next;
-		g->paths = DestroyAdj(g->paths);
+		g->paths = DestroyPaths(g->paths);
 		free(g);
 		g = aux;
 		aux = NULL;
